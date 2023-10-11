@@ -1,0 +1,59 @@
+﻿@model IEnumerable<CRUD.Models.GladiatorModel>
+
+@{
+    ViewData["Title"] = "Gladiators";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.weapon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.attack)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.health)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hasShield)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.weapon)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.attack)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.health)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hasShield)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
