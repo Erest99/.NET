@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CRUD.Data;
 using CRUD.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CRUD.Controllers
 {
@@ -22,9 +23,9 @@ namespace CRUD.Controllers
         // GET: Gladiator
         public async Task<IActionResult> Index()
         {
-              return _context.GladiatorModel != null ? 
-                          View(await _context.GladiatorModel.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.GladiatorModel'  is null.");
+            return _context.GladiatorModel != null ?
+                        View(await _context.GladiatorModel.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.GladiatorModel'  is null.");
         }
 
         // GET: Gladiator/ShowSearchForm
@@ -39,8 +40,54 @@ namespace CRUD.Controllers
         public async Task<IActionResult> ShowSearchResult(String SearchPhrase)
         {
             return _context.GladiatorModel != null ?
-                        View("Index",await _context.GladiatorModel.Where(g => g.name.Contains(SearchPhrase)).ToListAsync()) :
+                        View("Index", await _context.GladiatorModel.Where(g => g.name.Contains(SearchPhrase)).ToListAsync()) :
                         Problem("Entity set 'ApplicationDbContext.GladiatorModel'  is null.");
+        }
+
+        // GET: Gladiator/ShowFightView
+        public async Task<IActionResult> ShowFightView()
+        {
+            return _context.GladiatorModel != null ?
+                        View("ShowFightView", await _context.GladiatorModel.ToListAsync()) :
+                        Problem("Entity set 'ApplicationDbContext.GladiatorModel'  is null.");
+        }
+
+        // POST: Gladiator/ProcessBattle
+        public async Task<IActionResult> ProcessBattle(int id1, int id2)
+        {
+            //TODO fix passing value and parsing it to GladiatorModel var
+            GladiatorModel gladiator1 = await _context.GladiatorModel.Where(g => g.id == id1).FirstAsync();
+            GladiatorModel gladiator2 = await _context.GladiatorModel.Where(g => g.id == id2).FirstAsync();
+            int attack1, attack2, hp1, hp2, turn;
+
+            if (gladiator1.hasShield) attack2 = gladiator2.attack - 1;
+            else attack2 = gladiator2.attack;
+            if (gladiator2.hasShield) attack1 = gladiator1.attack - 1;
+            else attack1 = gladiator1.attack;
+            if (attack1 < 1)attack1 = 1;
+            if (attack2 < 1)attack2 = 1;
+            hp1 = gladiator1.health;
+            hp2 = gladiator2.health;
+            Random rnd = new Random();
+            turn = rnd.Next(0, 2);
+            while (hp1 > 0 && hp2 > 0)
+            {
+                if (turn % 2 == 0) hp2 -= attack1;
+                else hp1 -= attack2;
+            }
+            if(hp1 > 0)
+            {
+            return _context.GladiatorModel != null ?
+                View("Index",gladiator1) :
+                Problem("Entity set 'ApplicationDbContext.GladiatorModel'  is null.");
+            }
+            else
+            {
+            return _context.GladiatorModel != null ?
+                View("Index", gladiator2) :
+                Problem("Entity set 'ApplicationDbContext.GladiatorModel'  is null.");
+            }
+
         }
 
         // GET: Gladiator/Details/5
@@ -62,6 +109,7 @@ namespace CRUD.Controllers
         }
 
         // GET: Gladiator/Create
+        [Authorize]
         public IActionResult Create()
         {
             return View();
@@ -70,6 +118,7 @@ namespace CRUD.Controllers
         // POST: Gladiator/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("id,name,weapon,attack,health,hasShield")] GladiatorModel gladiatorModel)
@@ -84,6 +133,7 @@ namespace CRUD.Controllers
         }
 
         // GET: Gladiator/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.GladiatorModel == null)
@@ -102,6 +152,7 @@ namespace CRUD.Controllers
         // POST: Gladiator/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("id,name,weapon,attack,health,hasShield")] GladiatorModel gladiatorModel)
@@ -135,6 +186,7 @@ namespace CRUD.Controllers
         }
 
         // GET: Gladiator/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.GladiatorModel == null)
@@ -153,6 +205,7 @@ namespace CRUD.Controllers
         }
 
         // POST: Gladiator/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -18,5 +18,42 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #d4d4d4
 }
+
+footer {
+    background-color: #d4d4d4
+}
+
+nav {
+    background-color: #bababa
+}
+
+.display-5 {
+    font-family: fantasy;
+    font-size: 5vw;
+    text-align: center;
+}
+
+.display-5 {
+    font-family: fantasy;
+    font-size: 10vw;
+    text-align: center;
+}
+
+.text-desctiption{
+    width: 100%;
+    text-align: center;
+    margin-top: 40px;
+    font-style: italic;
+
+}
+
+.form-group {
+    width: 100%;
+    text-align: center;
+    align-items: center;
+    margin-block: 10px;
+}
+

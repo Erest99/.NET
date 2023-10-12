@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CRUD.Models.GladiatorModel>
+
+@{
+    ViewData["Title"] = "Duel";
+}
+
+<h4>Duel</h4>
+<hr />
+<div class="text-desctiption">
+    <p>Select your fighters</p>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ProcessBattle">
+            <div class="form-group">
+                <label for="SearchPhrase" class="control-label"></label>
+                <!-- Fix passing values -->
+                @Html.DropDownList("FighterOneDrop",new SelectList(Model.Select(x => new { Value = x.id, Text = x.name }),"Value","Text"),new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label for="SearchPhrase" class="control-label"></label>
+                @Html.DropDownList("FighterTwoDrop",new SelectList(Model.Select(x => new { Value = x.id, Text = x.name }),"Value","Text"),new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Fight" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
