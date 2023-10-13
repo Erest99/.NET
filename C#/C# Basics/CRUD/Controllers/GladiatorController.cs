@@ -47,17 +47,24 @@ namespace CRUD.Controllers
         // GET: Gladiator/ShowFightView
         public async Task<IActionResult> ShowFightView()
         {
+            List<GladiatorModel> gladiators = await _context.GladiatorModel.ToListAsync();
+            var duelModel = new DuelViewModel();
+            duelModel.gladiatorsSelectList = new List<SelectListItem>();
+            foreach (var gladiator in gladiators)
+            {
+                duelModel.gladiatorsSelectList.Add(new SelectListItem { Text = gladiator.name, Value = gladiator.id.ToString()});
+            }
             return _context.GladiatorModel != null ?
-                        View("ShowFightView", await _context.GladiatorModel.ToListAsync()) :
+                        View("ShowFightView", duelModel) :
                         Problem("Entity set 'ApplicationDbContext.GladiatorModel'  is null.");
         }
 
         // POST: Gladiator/ProcessBattle
-        public async Task<IActionResult> ProcessBattle(int id1, int id2)
+        public async Task<IActionResult> ProcessBattle(DuelViewModel duelViewModel)
         {
             //TODO fix passing value and parsing it to GladiatorModel var
-            GladiatorModel gladiator1 = await _context.GladiatorModel.Where(g => g.id == id1).FirstAsync();
-            GladiatorModel gladiator2 = await _context.GladiatorModel.Where(g => g.id == id2).FirstAsync();
+            GladiatorModel gladiator1 = await _context.GladiatorModel.Where(g => g.id == Convert.ToInt64(duelViewModel.firstFighterID)).FirstAsync();
+            GladiatorModel gladiator2 = await _context.GladiatorModel.Where(g => g.id == Convert.ToInt64(duelViewModel.secondFighterID)).FirstAsync();
             int attack1, attack2, hp1, hp2, turn;
 
             if (gladiator1.hasShield) attack2 = gladiator2.attack - 1;
@@ -78,13 +85,13 @@ namespace CRUD.Controllers
             if(hp1 > 0)
             {
             return _context.GladiatorModel != null ?
-                View("Index",gladiator1) :
+                View("Winner",gladiator1) :
                 Problem("Entity set 'ApplicationDbContext.GladiatorModel'  is null.");
             }
             else
             {
             return _context.GladiatorModel != null ?
-                View("Index", gladiator2) :
+                View("Winner", gladiator2) :
                 Problem("Entity set 'ApplicationDbContext.GladiatorModel'  is null.");
             }
 

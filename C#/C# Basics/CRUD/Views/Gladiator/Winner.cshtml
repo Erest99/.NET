@@ -1,0 +1,49 @@
+﻿@model CRUD.Models.GladiatorModel
+
+@{
+    ViewData["Title"] = "Winner";
+}
+
+<h1>Winner of duel is!</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.weapon)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.attack)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.health)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.hasShield)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.weapon)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.attack)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.health)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.hasShield)
+            </td>
+        </tr>
+    </tbody>
+</table>
