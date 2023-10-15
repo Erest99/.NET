@@ -65,6 +65,7 @@ namespace CRUD.Controllers
             //TODO fix passing value and parsing it to GladiatorModel var
             GladiatorModel gladiator1 = await _context.GladiatorModel.Where(g => g.id == Convert.ToInt64(duelViewModel.firstFighterID)).FirstAsync();
             GladiatorModel gladiator2 = await _context.GladiatorModel.Where(g => g.id == Convert.ToInt64(duelViewModel.secondFighterID)).FirstAsync();
+            GladiatorModel looser, winner;
             int attack1, attack2, hp1, hp2, turn;
 
             if (gladiator1.hasShield) attack2 = gladiator2.attack - 1;
@@ -73,28 +74,22 @@ namespace CRUD.Controllers
             else attack1 = gladiator1.attack;
             if (attack1 < 1)attack1 = 1;
             if (attack2 < 1)attack2 = 1;
-            hp1 = gladiator1.health;
-            hp2 = gladiator2.health;
             Random rnd = new Random();
             turn = rnd.Next(0, 2);
-            while (hp1 > 0 && hp2 > 0)
+            while (gladiator1.health > 0 && gladiator2.health > 0)
             {
-                if (turn % 2 == 0) hp2 -= attack1;
-                else hp1 -= attack2;
+                if (turn % 2 == 0) gladiator2.health -= attack1;
+                else gladiator1.health -= attack2;
+                turn++;
             }
-            if(hp1 > 0)
-            {
+            if (gladiator1.health > 0) { looser = gladiator2; winner = gladiator1; }
+            else {looser = gladiator1; winner = gladiator2; }
+            _context.GladiatorModel.Remove(looser);
+            _context.Update(winner);
+            await _context.SaveChangesAsync();
             return _context.GladiatorModel != null ?
-                View("Winner",gladiator1) :
+                View("Winner", winner) :
                 Problem("Entity set 'ApplicationDbContext.GladiatorModel'  is null.");
-            }
-            else
-            {
-            return _context.GladiatorModel != null ?
-                View("Winner", gladiator2) :
-                Problem("Entity set 'ApplicationDbContext.GladiatorModel'  is null.");
-            }
-
         }
 
         // GET: Gladiator/Details/5
