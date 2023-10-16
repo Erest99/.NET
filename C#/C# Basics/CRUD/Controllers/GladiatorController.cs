@@ -66,7 +66,7 @@ namespace CRUD.Controllers
             GladiatorModel gladiator1 = await _context.GladiatorModel.Where(g => g.id == Convert.ToInt64(duelViewModel.firstFighterID)).FirstAsync();
             GladiatorModel gladiator2 = await _context.GladiatorModel.Where(g => g.id == Convert.ToInt64(duelViewModel.secondFighterID)).FirstAsync();
             GladiatorModel looser, winner;
-            int attack1, attack2, hp1, hp2, turn;
+            int attack1, attack2, losthp1, losthp2, turn;
 
             if (gladiator1.hasShield) attack2 = gladiator2.attack - 1;
             else attack2 = gladiator2.attack;
@@ -76,10 +76,12 @@ namespace CRUD.Controllers
             if (attack2 < 1)attack2 = 1;
             Random rnd = new Random();
             turn = rnd.Next(0, 2);
+            losthp1 = 0;
+            losthp2 = 0;
             while (gladiator1.health > 0 && gladiator2.health > 0)
             {
-                if (turn % 2 == 0) gladiator2.health -= attack1;
-                else gladiator1.health -= attack2;
+                if (turn % 2 == 0) {gladiator2.health -= attack1; losthp2 += attack1; }
+                else {gladiator1.health -= attack2; losthp1 += attack2; }
                 turn++;
             }
             if (gladiator1.health > 0) { looser = gladiator2; winner = gladiator1; }
