@@ -33,6 +33,16 @@
                 <input asp-for="health" class="form-control" />
                 <span asp-validation-for="health" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="speed" class="control-label"></label>
+                <input asp-for="speed" class="form-control" />
+                <span asp-validation-for="speed" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="defence" class="control-label"></label>
+                <input asp-for="defence" class="form-control" />
+                <span asp-validation-for="defence" class="text-danger"></span>
+            </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="hasShield" /> @Html.DisplayNameFor(model => model.hasShield)

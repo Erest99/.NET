@@ -66,24 +66,32 @@ namespace CRUD.Controllers
             GladiatorModel gladiator1 = await _context.GladiatorModel.Where(g => g.id == Convert.ToInt64(duelViewModel.firstFighterID)).FirstAsync();
             GladiatorModel gladiator2 = await _context.GladiatorModel.Where(g => g.id == Convert.ToInt64(duelViewModel.secondFighterID)).FirstAsync();
             GladiatorModel looser, winner;
-            int attack1, attack2, losthp1, losthp2, turn;
+            double attack1, attack2, losthp1, losthp2, turn;
+            double health1, health2;
 
-            if (gladiator1.hasShield) attack2 = gladiator2.attack - 1;
-            else attack2 = gladiator2.attack;
-            if (gladiator2.hasShield) attack1 = gladiator1.attack - 1;
-            else attack1 = gladiator1.attack;
+            if (gladiator1.hasShield) attack2 = Convert.ToDouble(gladiator2.attack) - Convert.ToDouble(gladiator1.defence)*1.25;
+            else attack2 = Convert.ToDouble(gladiator2.attack) - Convert.ToDouble(gladiator1.defence) * 0.75;
+            if (gladiator2.hasShield) attack1 = Convert.ToDouble(gladiator1.attack) - Convert.ToDouble(gladiator2.defence)*1.25;
+            else attack1 = Convert.ToDouble(gladiator1.attack) - Convert.ToDouble(gladiator2.defence) * 0.75;
             if (attack1 < 1)attack1 = 1;
             if (attack2 < 1)attack2 = 1;
             Random rnd = new Random();
-            turn = rnd.Next(0, 2);
+            double speedCoef = gladiator1.speed / (gladiator1.speed + gladiator2.speed);
+            double luck = rnd.NextDouble();
+            if (luck < speedCoef) turn = 0;
+            else turn = 1;
             losthp1 = 0;
             losthp2 = 0;
-            while (gladiator1.health > 0 && gladiator2.health > 0)
+            health1 = gladiator1.health;
+            health2 = gladiator2.health;
+            while (health1 > 0 && health2 > 0)
             {
-                if (turn % 2 == 0) {gladiator2.health -= attack1; losthp2 += attack1; }
-                else {gladiator1.health -= attack2; losthp1 += attack2; }
+                if (turn % 2 == 0) {health2 -= attack1; losthp2 += attack1; }
+                else {health1 -= attack2; losthp1 += attack2; }
                 turn++;
             }
+            gladiator1.health = Convert.ToInt32(Math.Ceiling(health1));
+            gladiator2.health = Convert.ToInt32(Math.Ceiling(health2));
             if (gladiator1.health > 0) { looser = gladiator2; winner = gladiator1; }
             else {looser = gladiator1; winner = gladiator2; }
             _context.GladiatorModel.Remove(looser);
@@ -125,10 +133,11 @@ namespace CRUD.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,name,weapon,attack,health,hasShield")] GladiatorModel gladiatorModel)
+        public async Task<IActionResult> Create([Bind("id,name,weapon,attack,speed,defence,health,maxhealth,hasShield")] GladiatorModel gladiatorModel)
         {
             if (ModelState.IsValid)
             {
+                gladiatorModel.maxhealth = gladiatorModel.health;
                 _context.Add(gladiatorModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -159,7 +168,7 @@ namespace CRUD.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,name,weapon,attack,health,hasShield")] GladiatorModel gladiatorModel)
+        public async Task<IActionResult> Edit(int id, [Bind("id,name,weapon,attack,speed,defence,health,maxhealth,hasShield")] GladiatorModel gladiatorModel)
         {
             if (id != gladiatorModel.id)
             {
