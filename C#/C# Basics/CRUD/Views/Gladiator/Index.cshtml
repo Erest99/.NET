@@ -13,21 +13,20 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.name)
+                Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.weapon)
+                Weapon
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.attack)
+                Attack
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.health)
+                Health
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.hasShield)
+                Level
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -46,7 +45,7 @@
                 @Html.DisplayFor(modelItem => item.health)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.hasShield)
+                @Html.DisplayFor(modelItem => item.level)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |

@@ -94,6 +94,7 @@ namespace CRUD.Controllers
             gladiator2.health = Convert.ToInt32(Math.Ceiling(health2));
             if (gladiator1.health > 0) { looser = gladiator2; winner = gladiator1; }
             else {looser = gladiator1; winner = gladiator2; }
+            winner = GladiatorGiveXP(winner, looser);
             _context.GladiatorModel.Remove(looser);
             _context.Update(winner);
             await _context.SaveChangesAsync();
@@ -133,11 +134,11 @@ namespace CRUD.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,name,weapon,attack,speed,defence,health,maxhealth,hasShield")] GladiatorModel gladiatorModel)
+        public async Task<IActionResult> Create([Bind("id,name,weapon,attack,speed,defence,health,maxhealth,hasShield,level,xp,xptolevel,lastrested")] GladiatorModel gladiatorModel)
         {
             if (ModelState.IsValid)
             {
-                gladiatorModel.maxhealth = gladiatorModel.health;
+                GladiatorInit(gladiatorModel);
                 _context.Add(gladiatorModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -240,6 +241,32 @@ namespace CRUD.Controllers
         private bool GladiatorModelExists(int id)
         {
           return (_context.GladiatorModel?.Any(e => e.id == id)).GetValueOrDefault();
+        }
+
+        private GladiatorModel GladiatorInit(GladiatorModel gladiator)
+        {
+            gladiator.maxhealth = gladiator.health;
+            gladiator.xp = 0;
+            gladiator.xptolevel = 1000;
+            gladiator.level = 1;
+            gladiator.lastrested = DateTime.MinValue;
+            return gladiator;
+        }
+
+        private GladiatorModel GladiatorGiveXP(GladiatorModel winner, GladiatorModel loser)
+        {
+            double xpratio = loser.level / winner.level;
+            double xptoreceive = 500 * xpratio;
+            double xptolevel;
+            winner.xp += Convert.ToInt32(Math.Ceiling(xptoreceive));
+            while(winner.xp >= winner.xptolevel)
+            {
+                winner.xp -= winner.xptolevel;
+                xptolevel = winner.xptolevel * 1.25;
+                winner.xptolevel = Convert.ToInt32(Math.Ceiling(xptolevel));
+                winner.level += 1;
+            }
+            return winner;
         }
     }
 }
