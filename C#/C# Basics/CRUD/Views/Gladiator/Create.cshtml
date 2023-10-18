@@ -3,6 +3,12 @@
 @{
     ViewData["Title"] = "Create";
 }
+@if(TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>@TempData["AlertMessage"]</strong>
+    </div>
+}
 
 <h1>Create</h1>
 

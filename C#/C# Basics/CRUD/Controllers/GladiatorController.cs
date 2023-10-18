@@ -139,13 +139,16 @@ namespace CRUD.Controllers
             if (ModelState.IsValid)
             {
                 GladiatorInit(gladiatorModel);
-                if(GladiatorCheck(gladiatorModel))
+                var skillresult = GladiatorCheck(gladiatorModel);
+                if (skillresult.Item1)
                 {
                     _context.Add(gladiatorModel);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
+                TempData["AlertMessage"] = "Not enough skill points, need "+skillresult.Item2.ToString() + " got " + skillresult.Item3.ToString();
             }
+
             return View(gladiatorModel);
         }
 
@@ -181,23 +184,28 @@ namespace CRUD.Controllers
 
             if (ModelState.IsValid)
             {
-                try
+                var skillresult = GladiatorCheck(gladiatorModel);
+                if (skillresult.Item1)
                 {
-                    _context.Update(gladiatorModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!GladiatorModelExists(gladiatorModel.id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(gladiatorModel);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!GladiatorModelExists(gladiatorModel.id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
+                TempData["AlertMessage"] = "Not enough skill points, need " + skillresult.Item2.ToString() + " got " + skillresult.Item3.ToString();
             }
             return View(gladiatorModel);
         }
@@ -272,12 +280,12 @@ namespace CRUD.Controllers
             return winner;
         }
 
-        private bool GladiatorCheck(GladiatorModel gladiator)
+        private (bool,int,int) GladiatorCheck(GladiatorModel gladiator)
         {
             double allowedskillpoints = 9 + gladiator.level;
             double neededskillpoints = Convert.ToDouble(gladiator.health) / 3 + gladiator.attack + gladiator.defence + gladiator.speed;
-            if (allowedskillpoints >= neededskillpoints) return true;
-            else return false;
+            if (allowedskillpoints >= neededskillpoints) return (true, Convert.ToInt32(neededskillpoints), Convert.ToInt32(allowedskillpoints));
+            else return (false, Convert.ToInt32(neededskillpoints), Convert.ToInt32(allowedskillpoints));
         }
     }
 }
