@@ -139,9 +139,12 @@ namespace CRUD.Controllers
             if (ModelState.IsValid)
             {
                 GladiatorInit(gladiatorModel);
-                _context.Add(gladiatorModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if(GladiatorCheck(gladiatorModel))
+                {
+                    _context.Add(gladiatorModel);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(gladiatorModel);
         }
@@ -245,7 +248,7 @@ namespace CRUD.Controllers
 
         private GladiatorModel GladiatorInit(GladiatorModel gladiator)
         {
-            gladiator.maxhealth = gladiator.health;
+            gladiator.health = gladiator.maxhealth;
             gladiator.xp = 0;
             gladiator.xptolevel = 1000;
             gladiator.level = 1;
@@ -267,6 +270,14 @@ namespace CRUD.Controllers
                 winner.level += 1;
             }
             return winner;
+        }
+
+        private bool GladiatorCheck(GladiatorModel gladiator)
+        {
+            double allowedskillpoints = 9 + gladiator.level;
+            double neededskillpoints = Convert.ToDouble(gladiator.health) / 3 + gladiator.attack + gladiator.defence + gladiator.speed;
+            if (allowedskillpoints >= neededskillpoints) return true;
+            else return false;
         }
     }
 }
