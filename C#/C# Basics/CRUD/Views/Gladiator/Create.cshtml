@@ -10,6 +10,10 @@
     </div>
 }
 
+<div class="remSP" id="spdiv">
+
+</div>
+
 <h1>Create</h1>
 
 <h4>GladiatorModel</h4>
@@ -63,6 +67,39 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+<script>
+    // Get references to the input fields and the result div
+    var attack_input = document.getElementById("attack");
+    var health_input = document.getElementById("maxhealth");
+    var speed_input = document.getElementById("speed");
+    var defence_input = document.getElementById("defence");
+    var resultDiv = document.getElementById("spdiv");
+    var maxSP = 10;
+
+    // Function to calculate and update the sum
+    function calculateSP() {
+        var value1 = parseFloat(attack_input.value) || 0; // Convert input value to a number, default to 0 if not a valid number
+        var value2 = parseFloat(health_input.value / 3) || 0;
+        var value3 = parseFloat(speed_input.value) || 0;
+        var value4 = parseFloat(defence_input.value) || 0;
+        var sum = value1 + value2 + value3 + value4;
+        var result = maxSP - sum;
+
+        resultDiv.textContent = "Remaining skillpoints: " + result;
+    }
+
+    // Add event listeners to recalculate the sum when input values change
+    attack_input.addEventListener("input", calculateSP);
+    health_input.addEventListener("input", calculateSP);
+    speed_input.addEventListener("input", calculateSP);
+    defence_input.addEventListener("input", calculateSP);
+
+    // Initial calculation
+    calculateSP();
+</script>
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

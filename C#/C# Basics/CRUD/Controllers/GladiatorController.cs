@@ -67,14 +67,18 @@ namespace CRUD.Controllers
             GladiatorModel gladiator2 = await _context.GladiatorModel.Where(g => g.id == Convert.ToInt64(duelViewModel.secondFighterID)).FirstAsync();
             GladiatorModel looser, winner;
             double attack1, attack2, losthp1, losthp2, turn;
-            double health1, health2;
+            double health1, health2, speed1, speed2;
+            speed1 = gladiator1.speed;
+            speed2 = gladiator2.speed; 
 
-            if (gladiator1.hasShield) attack2 = Convert.ToDouble(gladiator2.attack) - Convert.ToDouble(gladiator1.defence)*1.25;
+            if (gladiator1.hasShield) { attack2 = Convert.ToDouble(gladiator2.attack) - Convert.ToDouble(gladiator1.defence) * 1.25; speed1 = (3/5) * speed1; }
             else attack2 = Convert.ToDouble(gladiator2.attack) - Convert.ToDouble(gladiator1.defence) * 0.75;
-            if (gladiator2.hasShield) attack1 = Convert.ToDouble(gladiator1.attack) - Convert.ToDouble(gladiator2.defence)*1.25;
+            if (gladiator2.hasShield) { attack1 = Convert.ToDouble(gladiator1.attack) - Convert.ToDouble(gladiator2.defence) * 1.25; speed2 = (3/5) * speed2; }
             else attack1 = Convert.ToDouble(gladiator1.attack) - Convert.ToDouble(gladiator2.defence) * 0.75;
             if (attack1 < 1)attack1 = 1;
             if (attack2 < 1)attack2 = 1;
+            gladiator1.speed = Convert.ToInt32(Math.Ceiling(speed1));
+            gladiator2.speed = Convert.ToInt32(Math.Ceiling(speed2));
             Random rnd = new Random();
             double speedCoef = gladiator1.speed / (gladiator1.speed + gladiator2.speed);
             double luck = rnd.NextDouble();
