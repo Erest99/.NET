@@ -74,7 +74,7 @@
     var speed_input = document.getElementById("speed");
     var defence_input = document.getElementById("defence");
     var resultDiv = document.getElementById("spdiv");
-    var maxSP = 10;
+    var maxSP = @Model.level + 9;
 
     // Function to calculate and update the sum
     function calculateSP() {

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wMKwHGJP6Ker3yDdFLpXVRauyUeA4bIeTcxYcrDB+8Ks/2ntqb2BrE2TaitZN7VeqW7N+EmXOLt8tpzO3mGFMA==",
+  "dgSpecHash": "rSuT4zwYoXXuOhzvee2/kIO5nHeEHA6dutG5VsrkSPdcIqJYwPW62ROZ3wAzgqS66wVAq3mBZsMR8ADDgTUj6w==",
   "success": true,
   "projectFilePath": "C:\\Users\\Horky\\Documents\\GitHub\\.NET\\C#\\C# Basics\\CRUD\\CRUD.csproj",
   "expectedPackageFiles": [
@@ -56,6 +56,11 @@
     "C:\\Users\\Horky\\.nuget\\packages\\humanizer.core.zh-cn\\2.14.1\\humanizer.core.zh-cn.2.14.1.nupkg.sha512",
     "C:\\Users\\Horky\\.nuget\\packages\\humanizer.core.zh-hans\\2.14.1\\humanizer.core.zh-hans.2.14.1.nupkg.sha512",
     "C:\\Users\\Horky\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
+    "C:\\Users\\Horky\\.nuget\\packages\\microsoft-web-helpers\\2.1.20710.2\\microsoft-web-helpers.2.1.20710.2.nupkg.sha512",
+    "C:\\Users\\Horky\\.nuget\\packages\\microsoft.aspnet.razor\\2.0.20505\\microsoft.aspnet.razor.2.0.20505.nupkg.sha512",
+    "C:\\Users\\Horky\\.nuget\\packages\\microsoft.aspnet.webpages\\2.0.20505\\microsoft.aspnet.webpages.2.0.20505.nupkg.sha512",
+    "C:\\Users\\Horky\\.nuget\\packages\\microsoft.aspnet.webpages.data\\2.0.20505\\microsoft.aspnet.webpages.data.2.0.20505.nupkg.sha512",
+    "C:\\Users\\Horky\\.nuget\\packages\\microsoft.aspnet.webpages.webdata\\2.0.20505\\microsoft.aspnet.webpages.webdata.2.0.20505.nupkg.sha512",
     "C:\\Users\\Horky\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\7.0.12\\microsoft.aspnetcore.cryptography.internal.7.0.12.nupkg.sha512",
     "C:\\Users\\Horky\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\7.0.12\\microsoft.aspnetcore.cryptography.keyderivation.7.0.12.nupkg.sha512",
     "C:\\Users\\Horky\\.nuget\\packages\\microsoft.aspnetcore.diagnostics.entityframeworkcore\\7.0.12\\microsoft.aspnetcore.diagnostics.entityframeworkcore.7.0.12.nupkg.sha512",
@@ -124,6 +129,7 @@
     "C:\\Users\\Horky\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.templating\\7.0.9\\microsoft.visualstudio.web.codegeneration.templating.7.0.9.nupkg.sha512",
     "C:\\Users\\Horky\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.utils\\7.0.9\\microsoft.visualstudio.web.codegeneration.utils.7.0.9.nupkg.sha512",
     "C:\\Users\\Horky\\.nuget\\packages\\microsoft.visualstudio.web.codegenerators.mvc\\7.0.9\\microsoft.visualstudio.web.codegenerators.mvc.7.0.9.nupkg.sha512",
+    "C:\\Users\\Horky\\.nuget\\packages\\microsoft.web.infrastructure\\1.0.0\\microsoft.web.infrastructure.1.0.0.nupkg.sha512",
     "C:\\Users\\Horky\\.nuget\\packages\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\Horky\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\Horky\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
@@ -243,5 +249,86 @@
     "C:\\Users\\Horky\\.nuget\\packages\\system.xml.readerwriter\\4.3.0\\system.xml.readerwriter.4.3.0.nupkg.sha512",
     "C:\\Users\\Horky\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "microsoft-web-helpers 2.1.20710.2 závisí na Microsoft.AspNet.WebPages (>= 2.0.0 && < 2.1.0), ale Microsoft.AspNet.WebPages 2.0.0 se nenašlo. Přeložila se nejlepší přibližná shoda Microsoft.AspNet.WebPages 2.0.20505.",
+      "libraryId": "Microsoft.AspNet.WebPages",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "microsoft-web-helpers 2.1.20710.2 závisí na Microsoft.AspNet.WebPages.WebData (>= 2.0.0 && < 2.1.0), ale Microsoft.AspNet.WebPages.WebData 2.0.0 se nenašlo. Přeložila se nejlepší přibližná shoda Microsoft.AspNet.WebPages.WebData 2.0.20505.",
+      "libraryId": "Microsoft.AspNet.WebPages.WebData",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Balíček microsoft-web-helpers 2.1.20710.2 se místo cílové verze rozhraní .NET Framework projektu net7.0 obnovil pomocí .NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1. Balíček nemusí být plně kompatibilní s vaším projektem.",
+      "libraryId": "microsoft-web-helpers",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Balíček Microsoft.AspNet.Razor 2.0.20505 se místo cílové verze rozhraní .NET Framework projektu net7.0 obnovil pomocí .NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1. Balíček nemusí být plně kompatibilní s vaším projektem.",
+      "libraryId": "Microsoft.AspNet.Razor",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Balíček Microsoft.AspNet.WebPages 2.0.20505 se místo cílové verze rozhraní .NET Framework projektu net7.0 obnovil pomocí .NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1. Balíček nemusí být plně kompatibilní s vaším projektem.",
+      "libraryId": "Microsoft.AspNet.WebPages",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Balíček Microsoft.AspNet.WebPages.Data 2.0.20505 se místo cílové verze rozhraní .NET Framework projektu net7.0 obnovil pomocí .NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1. Balíček nemusí být plně kompatibilní s vaším projektem.",
+      "libraryId": "Microsoft.AspNet.WebPages.Data",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Balíček Microsoft.AspNet.WebPages.WebData 2.0.20505 se místo cílové verze rozhraní .NET Framework projektu net7.0 obnovil pomocí .NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1. Balíček nemusí být plně kompatibilní s vaším projektem.",
+      "libraryId": "Microsoft.AspNet.WebPages.WebData",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Balíček Microsoft.Web.Infrastructure 1.0.0 se místo cílové verze rozhraní .NET Framework projektu net7.0 obnovil pomocí .NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1. Balíček nemusí být plně kompatibilní s vaším projektem.",
+      "libraryId": "Microsoft.Web.Infrastructure",
+      "targetGraphs": [
+        "net7.0"
+      ]
+    }
+  ]
 }

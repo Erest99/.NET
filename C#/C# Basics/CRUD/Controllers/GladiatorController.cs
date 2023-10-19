@@ -107,6 +107,34 @@ namespace CRUD.Controllers
                 Problem("Entity set 'ApplicationDbContext.GladiatorModel'  is null.");
         }
 
+        // GET: Gladiator/ShowRestingPage
+        public async Task<IActionResult> ShowRestingPage()
+        {
+            List<GladiatorModel> gladiators = await _context.GladiatorModel.ToListAsync();
+            var restModel = new RestViewModel();
+            restModel.gladiatorsSelectList = new List<SelectListItem>();
+            restModel.healthList = new List<(int, int, int)>();
+            foreach (var gladiator in gladiators)
+            {
+                restModel.gladiatorsSelectList.Add(new SelectListItem { Text = gladiator.name, Value = gladiator.id.ToString() });
+                restModel.healthList.Add((gladiator.id,gladiator.maxhealth, gladiator.health));
+            }
+            return _context.GladiatorModel != null ?
+                        View("ShowRestingPage", restModel) :
+                        Problem("Entity set 'ApplicationDbContext.GladiatorModel'  is null.");
+        }
+
+        // POST: Gladiator/Rest
+        public async Task<IActionResult> Rest(RestViewModel restModel)
+        {
+            GladiatorModel gladiator = await _context.GladiatorModel.Where(g => g.id == Convert.ToInt64(restModel.id)).FirstAsync();
+            gladiator.health = gladiator.maxhealth;
+            await _context.SaveChangesAsync();
+            return _context.GladiatorModel != null ?
+                View("Index", await _context.GladiatorModel.ToListAsync()) :
+                Problem("Entity set 'ApplicationDbContext.GladiatorModel'  is null.");
+        }
+
         // GET: Gladiator/Details/5
         public async Task<IActionResult> Details(int? id)
         {

@@ -1,0 +1,74 @@
+﻿@using System.Web.Helpers;
+@using Newtonsoft.Json
+@model CRUD.Models.RestViewModel
+
+@{
+    ViewData["Title"] = "Rest";
+}
+
+
+
+<h1>Rest</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Rest">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="form-label">Select gladiator to rest</label>
+                <select asp-items="Model.gladiatorsSelectList" class="form-control" asp-for="id" id="id_list">
+                </select>
+            </div>
+            <div id="mxhealth">
+
+            </div>
+            <div id="crhealth">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Rest" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+<script>
+    // Get references to the input fields and the result div
+    var gladiator_select = document.getElementById("id_list");
+    var maxhealth_output = document.getElementById("mxhealth");
+    var health_output = document.getElementById("crhealth");
+    var healthList = @Html.Raw(JsonConvert.SerializeObject(Model.healthList));
+
+    // Function to calculate and update the sum
+    function showHealth() {
+        debugger;
+        var gladiator = parseInt(gladiator_select.value) || 0; // Use .value to get the input value
+        var filtered = healthList.find(item => item.Item1 === gladiator);
+        debugger
+        if (filtered) {
+            maxhealth_output.textContent = "Max Health: " + filtered.Item2;
+            health_output.textContent = "Current Health: " + filtered.Item3;
+        } else {
+            maxhealth_output.textContent = "Max Health: ";
+            health_output.textContent = "Current Health: ";
+        }
+    }
+
+    // Add event listeners to recalculate the sum when input values change
+    gladiator_select.addEventListener("change", showHealth);
+
+    // Initial calculation
+    showHealth();
+</script>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
