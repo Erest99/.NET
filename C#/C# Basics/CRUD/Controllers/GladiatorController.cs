@@ -52,7 +52,7 @@ namespace CRUD.Controllers
             duelModel.gladiatorsSelectList = new List<SelectListItem>();
             foreach (var gladiator in gladiators)
             {
-                duelModel.gladiatorsSelectList.Add(new SelectListItem { Text = gladiator.name, Value = gladiator.id.ToString()});
+                if(DateTime.Now > gladiator.restingTill) duelModel.gladiatorsSelectList.Add(new SelectListItem { Text = gladiator.name, Value = gladiator.id.ToString()});
             }
             return _context.GladiatorModel != null ?
                         View("ShowFightView", duelModel) :
@@ -116,8 +116,11 @@ namespace CRUD.Controllers
             restModel.healthList = new List<(int, int, int)>();
             foreach (var gladiator in gladiators)
             {
-                restModel.gladiatorsSelectList.Add(new SelectListItem { Text = gladiator.name, Value = gladiator.id.ToString() });
-                restModel.healthList.Add((gladiator.id,gladiator.maxhealth, gladiator.health));
+                if (DateTime.Now > gladiator.restingTill)
+                {
+                    restModel.gladiatorsSelectList.Add(new SelectListItem { Text = gladiator.name, Value = gladiator.id.ToString() });
+                    restModel.healthList.Add((gladiator.id, gladiator.maxhealth, gladiator.health));
+                }
             }
             return _context.GladiatorModel != null ?
                         View("ShowRestingPage", restModel) :
@@ -129,6 +132,7 @@ namespace CRUD.Controllers
         {
             GladiatorModel gladiator = await _context.GladiatorModel.Where(g => g.id == Convert.ToInt64(restModel.id)).FirstAsync();
             gladiator.health = gladiator.maxhealth;
+            gladiator.restingTill = DateTime.Now.AddHours(1);
             await _context.SaveChangesAsync();
             return _context.GladiatorModel != null ?
                 View("Index", await _context.GladiatorModel.ToListAsync()) :
@@ -207,7 +211,7 @@ namespace CRUD.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,name,weapon,attack,speed,defence,health,maxhealth,hasShield")] GladiatorModel gladiatorModel)
+        public async Task<IActionResult> Edit(int id, [Bind("id,name,weapon,attack,speed,defence,health,maxhealth,hasShield,level,xp,xptolevel,lastrested")] GladiatorModel gladiatorModel)
         {
             if (id != gladiatorModel.id)
             {
@@ -292,7 +296,7 @@ namespace CRUD.Controllers
             gladiator.xp = 0;
             gladiator.xptolevel = 1000;
             gladiator.level = 1;
-            gladiator.lastrested = DateTime.MinValue;
+            gladiator.restingTill = DateTime.MinValue;
             return gladiator;
         }
 

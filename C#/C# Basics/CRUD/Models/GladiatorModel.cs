@@ -39,8 +39,8 @@ namespace CRUD.Models
         [Display(Name = "XP for next level")]
         public int xptolevel { get; set; }
 
-        [Display(Name = "Time of last rest")]
-        public DateTime lastrested { get; set; }
+        [Display(Name = "Time this gladiator will stop resting and can fight")]
+        public DateTime restingTill { get; set; }
 
         public GladiatorModel()
         {
