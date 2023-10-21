@@ -62,7 +62,6 @@ namespace CRUD.Controllers
         // POST: Gladiator/ProcessBattle
         public async Task<IActionResult> ProcessBattle(DuelViewModel duelViewModel)
         {
-            //TODO fix passing value and parsing it to GladiatorModel var
             GladiatorModel gladiator1 = await _context.GladiatorModel.Where(g => g.id == Convert.ToInt64(duelViewModel.firstFighterID)).FirstAsync();
             GladiatorModel gladiator2 = await _context.GladiatorModel.Where(g => g.id == Convert.ToInt64(duelViewModel.secondFighterID)).FirstAsync();
             GladiatorModel looser, winner;
@@ -77,8 +76,8 @@ namespace CRUD.Controllers
             else attack1 = Convert.ToDouble(gladiator1.attack) - Convert.ToDouble(gladiator2.defence) * 0.75;
             if (attack1 < 1)attack1 = 1;
             if (attack2 < 1)attack2 = 1;
-            gladiator1.speed = Convert.ToInt32(Math.Ceiling(speed1));
-            gladiator2.speed = Convert.ToInt32(Math.Ceiling(speed2));
+            gladiator1.speed = Math.Max(Convert.ToInt32(Math.Ceiling(speed1)),1);
+            gladiator2.speed = Math.Max(Convert.ToInt32(Math.Ceiling(speed2)),1);
             Random rnd = new Random();
             double speedCoef = gladiator1.speed / (gladiator1.speed + gladiator2.speed);
             double luck = rnd.NextDouble();
@@ -132,7 +131,7 @@ namespace CRUD.Controllers
         {
             GladiatorModel gladiator = await _context.GladiatorModel.Where(g => g.id == Convert.ToInt64(restModel.id)).FirstAsync();
             gladiator.health = gladiator.maxhealth;
-            gladiator.restingTill = DateTime.Now.AddHours(1);
+            gladiator.restingTill = DateTime.Now.AddMinutes(5);
             await _context.SaveChangesAsync();
             return _context.GladiatorModel != null ?
                 View("Index", await _context.GladiatorModel.ToListAsync()) :

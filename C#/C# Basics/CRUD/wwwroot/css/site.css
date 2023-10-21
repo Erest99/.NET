@@ -57,3 +57,40 @@ nav {
     margin-block: 10px;
 }
 
+thead {
+    background-color: #bbbbbb;
+    border-width: 1px;
+    border-color: black;
+}
+
+tr, td, th {
+    border-width: 1px;
+    border-style: solid;
+    border-color: black;
+    text-align: center;
+}
+
+td{
+    background-color: white;
+}
+
+.link {
+    color: black;
+    font: bold;
+    background-color: #aaaaaa;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 6px;
+    border-color: #555555;
+    text-decoration: none;
+    padding-block: 3px;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-left:10px;
+    margin-right:10px;
+}
+
+    .link:hover {
+        color: #777711;
+        background-color: #555555;
+    }

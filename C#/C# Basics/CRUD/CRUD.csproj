@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Content\Audio\duelview.mp3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="microsoft-web-helpers" Version="2.1.20710.2" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.12" />

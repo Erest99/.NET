@@ -5,6 +5,22 @@
       "PackagePath": "staticwebassets\\CRUD.bundle.scp.css"
     },
     {
+      "Id": "C:\\Users\\Horky\\Documents\\GitHub\\.NET\\C#\\C# Basics\\CRUD\\wwwroot\\Content\\Audio\\duelview.mp3",
+      "PackagePath": "staticwebassets\\Content\\Audio\\duelview.mp3"
+    },
+    {
+      "Id": "C:\\Users\\Horky\\Documents\\GitHub\\.NET\\C#\\C# Basics\\CRUD\\wwwroot\\Content\\Audio\\index_audio.mp3",
+      "PackagePath": "staticwebassets\\Content\\Audio\\index_audio.mp3"
+    },
+    {
+      "Id": "C:\\Users\\Horky\\Documents\\GitHub\\.NET\\C#\\C# Basics\\CRUD\\wwwroot\\Content\\Audio\\restView.mp3",
+      "PackagePath": "staticwebassets\\Content\\Audio\\restView.mp3"
+    },
+    {
+      "Id": "C:\\Users\\Horky\\Documents\\GitHub\\.NET\\C#\\C# Basics\\CRUD\\wwwroot\\Content\\Audio\\winner_view.mp3",
+      "PackagePath": "staticwebassets\\Content\\Audio\\winner_view.mp3"
+    },
+    {
       "Id": "C:\\Users\\Horky\\Documents\\GitHub\\.NET\\C#\\C# Basics\\CRUD\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
