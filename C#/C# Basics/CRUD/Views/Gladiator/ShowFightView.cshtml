@@ -13,10 +13,12 @@
     <div class="col-md-4">
         <form asp-action="ProcessBattle" method="post">
             <label class="form-label">Select first fighter</label>
-            <select asp-items="Model.gladiatorsSelectList" class="form-control" asp-for="firstFighterID">
+            <select asp-items="Model.gladiatorsSelectList" class="form-control" asp-for="firstFighterID" id="firstFighterSelect">
+                <option value="">Select a fighter</option>
             </select>
             <label class="form-label">Select first fighter</label>
-            <select asp-items="Model.gladiatorsSelectList" class="form-control" asp-for="secondFighterID">
+            <select asp-items="Model.gladiatorsSelectList" class="form-control" asp-for="secondFighterID" id="secondFighterSelect">
+                <option value="">Select a fighter</option>
             </select>
             <div class="form-group">
                 <input type="submit" value="Fight" class="btn btn-primary" />
@@ -31,6 +33,44 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var firstSelect = document.getElementById("firstFighterSelect");
+        var secondSelect = document.getElementById("secondFighterSelect");
+        var fightButton = document.getElementById("fightButton");
+
+        firstSelect.addEventListener("change", function () {
+            var selectedValue = this.value;
+            for (var i = 0; i < secondSelect.options.length; i++) {
+                var option = secondSelect.options[i];
+                option.disabled = false;
+                if (option.value === selectedValue) {
+                    option.disabled = true;
+                }
+            }
+        });
+
+        secondSelect.addEventListener("change", function () {
+            var selectedValue = this.value;
+            for (var i = 0; i < firstSelect.options.length; i++) {
+                var option = firstSelect.options[i];
+                option.disabled = false;
+                if (option.value === selectedValue) {
+                    option.disabled = true;
+                }
+            }
+        });
+
+        // Disable the "Fight" button if either select has "Select a fighter" selected.
+        document.getElementById("battleForm").addEventListener("submit", function (event) {
+            if (firstSelect.value === "" || secondSelect.value === "") {
+                event.preventDefault();
+                alert("Please select both fighters before submitting.");
+            }
+        });
+    });
+</script>
 
 <script>
     window.addEventListener("load", function () {
