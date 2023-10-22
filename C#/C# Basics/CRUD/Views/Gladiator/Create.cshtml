@@ -34,22 +34,22 @@
             </div>
             <div class="form-group">
                 <label asp-for="attack" class="control-label"></label>
-                <input asp-for="attack" class="form-control" />
+                <input asp-for="attack" class="form-control" min="1" value="1" />
                 <span asp-validation-for="attack" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="maxhealth" class="control-label" asp-asp-for="Total Health"></label>
-                <input asp-for="maxhealth" class="form-control" />
+                <input asp-for="maxhealth" class="form-control" min="1" value="1" />
                 <span asp-validation-for="maxhealth" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="speed" class="control-label"></label>
-                <input asp-for="speed" class="form-control" />
+                <input asp-for="speed" class="form-control" min="1" value="1" />
                 <span asp-validation-for="speed" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="defence" class="control-label"></label>
-                <input asp-for="defence" class="form-control" />
+                <input asp-for="defence" class="form-control" min="1" value="1" />
                 <span asp-validation-for="defence" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
