@@ -11,5 +11,6 @@ namespace CRUD.Data
         {
         }
         public DbSet<CRUD.Models.GladiatorModel> GladiatorModel { get; set; } = default!;
+        public DbSet<CRUD.Models.UsersGladiatorModel> UsersGladiatorModel { get; set; } = default!;
     }
 }

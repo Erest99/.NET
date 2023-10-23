@@ -8,12 +8,15 @@ using Microsoft.EntityFrameworkCore;
 using CRUD.Data;
 using CRUD.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CRUD.Controllers
 {
     public class GladiatorController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly SignInManager<IdentityUser> signInManager;
 
         public GladiatorController(ApplicationDbContext context)
         {
@@ -171,19 +174,49 @@ namespace CRUD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("id,name,weapon,attack,speed,defence,health,maxhealth,hasShield,level,xp,xptolevel,lastrested")] GladiatorModel gladiatorModel)
         {
-            if (ModelState.IsValid)
-            {
-                GladiatorInit(gladiatorModel);
-                var skillresult = GladiatorCheck(gladiatorModel);
-                if (skillresult.Item1)
-                {
-                    _context.Add(gladiatorModel);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+            string? userId = userManager.GetUserId(User);
+            var user = await userManager.GetUserAsync(User);
+            string userEmail;
+            if (user != null) 
+            { 
+                if (user.Email != null) 
+                { 
+                    userEmail = user.Email; 
+                } else 
+                { 
+                    userEmail = "unknown"; 
                 }
-                TempData["AlertMessage"] = "Not enough skill points, need "+skillresult.Item2.ToString() + " got " + skillresult.Item3.ToString();
-            }
 
+                if (ModelState.IsValid && userId != null)
+                {
+                    GladiatorInit(gladiatorModel);
+                    var skillresult = GladiatorCheck(gladiatorModel);
+                    if (skillresult.Item1)
+                    {
+                        var usersGladiatorModel = await _context.UsersGladiatorModel.FirstOrDefaultAsync(m => m.user_name == userEmail);
+                        if (usersGladiatorModel == null)
+                        {
+                            usersGladiatorModel = new UsersGladiatorModel();
+                            usersGladiatorModel.user_id = userId;
+                            usersGladiatorModel.user_name = userEmail;
+                            usersGladiatorModel.owned_gladiator_ids = new List<int>();
+                        }
+                        if (usersGladiatorModel.owned_gladiator_ids == null)
+                        {
+                            usersGladiatorModel.owned_gladiator_ids = new List<int> { gladiatorModel.id };
+                        }
+                        else
+                        {
+                            usersGladiatorModel.owned_gladiator_ids.Add(gladiatorModel.id);
+                        }
+                        _context.Add(usersGladiatorModel);
+                        _context.Add(gladiatorModel);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    TempData["AlertMessage"] = "Not enough skill points, need " + skillresult.Item2.ToString() + " got " + skillresult.Item3.ToString();
+                }
+            }
             return View(gladiatorModel);
         }
 
