@@ -1,8 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CRUD.Models
 {
     public class GladiatorModel{
+
+        [Key]
         [Display(Name = "Gladiator id")]
         public int id { get; set; }
 
@@ -41,6 +44,10 @@ namespace CRUD.Models
 
         [Display(Name = "Time this gladiator will stop resting and can fight")]
         public DateTime restingTill { get; set; }
+
+        //[ForeignKey("User")]
+        public int? user_id { get; set; } // Foreign key
+        public virtual UserModel? User { get; set; } // Navigation property
 
         public GladiatorModel()
         {

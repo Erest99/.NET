@@ -10,6 +10,19 @@ namespace CRUD.Data
             : base(options)
         {
         }
-        public DbSet<CRUD.Models.GladiatorModel> GladiatorModel { get; set; } = default!;
+        public DbSet<GladiatorModel> GladiatorModel { get; set; } = default!;
+        //public DbSet<UserModel> Users { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            
+            // Configure the one-to-many relationship
+            modelBuilder.Entity<UserModel>()
+                .HasMany(user => user.gladiators)
+                .WithOne(gladiator => gladiator.User)
+                .HasForeignKey(gladiator => gladiator.user_id);
+            
+        }
     }
 }

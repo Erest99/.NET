@@ -171,9 +171,9 @@ namespace CRUD.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("id,name,weapon,attack,speed,defence,health,maxhealth,hasShield,level,xp,xptolevel,lastrested")] GladiatorModel gladiatorModel)
         {
+            GladiatorInit(gladiatorModel);
             if (ModelState.IsValid)
             {
-                GladiatorInit(gladiatorModel);
                 var skillresult = GladiatorCheck(gladiatorModel);
                 if (skillresult.Item1)
                 {
@@ -291,6 +291,7 @@ namespace CRUD.Controllers
 
         private GladiatorModel GladiatorInit(GladiatorModel gladiator)
         {
+            gladiator.id = _context.GladiatorModel.Count()+1;
             gladiator.health = gladiator.maxhealth;
             gladiator.xp = 0;
             gladiator.xptolevel = 1000;
