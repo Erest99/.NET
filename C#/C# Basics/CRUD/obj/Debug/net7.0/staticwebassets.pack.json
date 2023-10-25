@@ -165,6 +165,10 @@
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\bootstrap.rtl.min.css.map"
     },
     {
+      "Id": "C:\\Users\\Horky\\Documents\\GitHub\\.NET\\C#\\C# Basics\\CRUD\\wwwroot\\lib\\bootstrap\\dist\\css\\theme.css",
+      "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\css\\theme.css"
+    },
+    {
       "Id": "C:\\Users\\Horky\\Documents\\GitHub\\.NET\\C#\\C# Basics\\CRUD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
       "PackagePath": "staticwebassets\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js"
     },

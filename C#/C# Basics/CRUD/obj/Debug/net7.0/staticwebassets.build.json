@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ctcn1/MrV/ASbJhkR4J/m48HjT38H715g7jIPFsNjB0=",
+  "Hash": "9sreqBULXx4GF7INDE22Dx7S1H0OtR0rTcBu8wKtCcE=",
   "Source": "CRUD",
   "BasePath": "_content/CRUD",
   "Mode": "Default",
@@ -1732,6 +1732,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap-utilities.rtl.min.css.map"
+    },
+    {
+      "Identity": "C:\\Users\\Horky\\Documents\\GitHub\\.NET\\C#\\C# Basics\\CRUD\\wwwroot\\lib\\bootstrap\\dist\\css\\theme.css",
+      "SourceId": "CRUD",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Horky\\Documents\\GitHub\\.NET\\C#\\C# Basics\\CRUD\\wwwroot\\",
+      "BasePath": "_content/CRUD",
+      "RelativePath": "lib/bootstrap/dist/css/theme.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\dist\\css\\theme.css"
     },
     {
       "Identity": "C:\\Users\\Horky\\Documents\\GitHub\\.NET\\C#\\C# Basics\\CRUD\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.bundle.js",
